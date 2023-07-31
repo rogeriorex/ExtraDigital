@@ -1,0 +1,69 @@
+unit View.Cadastro.EmpresaDetalhe;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Data.DB, Vcl.Controls,
+  Vcl.Forms, Vcl.Dialogs, View.CadastroDetalhe, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.Mask, View.Cadastro.Empresa;
+
+type
+  TfrmCadastroEmpresaDetalhe = class(TfrmCadastroDetalhe)
+    lblIDEMPRESA: TLabel;
+    lblNMEMPRESA: TLabel;
+    lblNUCNPJ: TLabel;
+    lblNUINSCRICAO: TLabel;
+    lblDTABERTURA: TLabel;
+    lblTLCOMERCIAL: TLabel;
+    lblTLCELULAR: TLabel;
+    lblTXEMAIL: TLabel;
+    IDEMPRESA: TDBEdit;
+    NMEMPRESA: TDBEdit;
+    NUCNPJ: TDBEdit;
+    NUINSCRICAO: TDBEdit;
+    DTABERTURA: TDBEdit;
+    TLCOMERCIAL: TDBEdit;
+    TLCELULAR: TDBEdit;
+    TXEMAIL: TDBEdit;
+    STATIVO: TDBCheckBox;
+    procedure STATIVOClick(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormClick(Sender: TObject);
+  end;
+
+var
+  frmCadastroEmpresaDetalhe: TfrmCadastroEmpresaDetalhe;
+
+implementation
+
+uses
+  Model.Cadastro;
+
+{$R *.dfm}
+
+procedure TfrmCadastroEmpresaDetalhe.btnSalvarClick(Sender: TObject);
+begin
+  frmCadastroEmpresa.grdCadastro.DataSource.DataSet.Post;
+  inherited;
+end;
+
+procedure TfrmCadastroEmpresaDetalhe.FormClick(Sender: TObject);
+begin
+  inherited;
+  frmCadastroEmpresa.grdCadastro.DataSource.DataSet.FieldByName('DTABERTURA').EditMask :='!99/99/0000;1;_'
+end;
+
+procedure TfrmCadastroEmpresaDetalhe.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  if frmCadastroEmpresa.grdCadastro.DataSource.DataSet.State in [dsEdit, dsInsert] then
+    frmCadastroEmpresa.grdCadastro.DataSource.DataSet.Cancel;
+end;
+
+procedure TfrmCadastroEmpresaDetalhe.STATIVOClick(Sender: TObject);
+begin
+  inherited;
+  pnlCadastro.Enabled := (Sender as TDBCheckBox).Checked;
+end;
+
+end.

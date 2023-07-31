@@ -1,0 +1,13 @@
+unit View.Cadastro.Consts;
+
+interface
+
+type
+  TDataSetAction = (Insert, Edit);
+
+const
+  MENSAGEM_EXCLUSAO_REGISTRO = 'Deseja excluir o registro selecionado?';
+
+implementation
+
+end.

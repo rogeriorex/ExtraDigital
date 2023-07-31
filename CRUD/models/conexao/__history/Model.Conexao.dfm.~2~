@@ -1,0 +1,28 @@
+object dmConexao: TdmConexao
+  Height = 900
+  Width = 1200
+  PixelsPerInch = 144
+  object Connection: TFDConnection
+    Params.Strings = (
+      'Database=C:\Projects\delphi\ExtraDigital\DB\DADOS.FDB'
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'Server=127.0.0.1'
+      'Port=3050'
+      'DriverID=FB')
+    Connected = True
+    LoginPrompt = False
+    Left = 144
+    Top = 67
+  end
+  object WaitCursor: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 144
+    Top = 144
+  end
+  object FBDriverLink: TFDPhysFBDriverLink
+    VendorLib = 'C:\Program Files (x86)\Firebird\Firebird_2_5\bin\fbclient.dll'
+    Left = 144
+    Top = 221
+  end
+end

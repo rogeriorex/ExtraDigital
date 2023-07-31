@@ -1,0 +1,37 @@
+unit View.Principal.Helper;
+
+interface
+
+uses
+  Vcl.Menus, Vcl.Forms, SysUtils, View.Principal.Consts;
+
+type
+  TMenuItemHelper = class helper for TMenuItem
+    procedure CarregarTabela(const Value: String);
+    function InformarTabela: String;
+    function InformarTitulo: String;
+  end;
+
+implementation
+
+const
+  ATALHO_TECLADO_MENU = '&';
+
+{ TMenuItemHelper }
+
+procedure TMenuItemHelper.CarregarTabela(const Value: String);
+begin
+  Hint := Value;
+end;
+
+function TMenuItemHelper.InformarTabela: String;
+begin
+  Result := Hint;
+end;
+
+function TMenuItemHelper.InformarTitulo: String;
+begin
+  Result := StringReplace(Caption, ATALHO_TECLADO_MENU, EmptyStr, [rfReplaceAll]);
+end;
+
+end.

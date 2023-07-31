@@ -1,0 +1,110 @@
+inherited frmCadastroEndereco: TfrmCadastroEndereco
+  Caption = 'Endere'#231'o'
+  ClientHeight = 414
+  ClientWidth = 920
+  OnCreate = FormCreate
+  ExplicitLeft = 3
+  ExplicitTop = 3
+  DesignSize = (
+    920
+    414)
+  TextHeight = 15
+  inherited grdCadastro: TDBGrid
+    Width = 904
+    Height = 345
+    DataSource = dmCadastro.srcCadastroEndereco
+    Columns = <
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'IDENDERECO'
+        Title.Alignment = taCenter
+        Title.Caption = ' '
+        Width = 30
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NMTITULAR'
+        Title.Caption = 'TITULAR'
+        Width = 150
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NMEMPRESA'
+        Title.Caption = 'EMPRESA'
+        Width = 150
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NMENDERECO'
+        Title.Caption = 'LOGRADOURO'
+        Width = 160
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NUENDERECO'
+        Title.Caption = 'N'#186
+        Width = 30
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NMBAIRRO'
+        Title.Caption = 'BAIRRO'
+        Width = 130
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NMCIDADE'
+        Title.Caption = 'CIDADE'
+        Width = 112
+        Visible = True
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'SGESTADO'
+        Title.Alignment = taCenter
+        Title.Caption = 'UF'
+        Width = 31
+        Visible = True
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'STATIVO'
+        Title.Alignment = taCenter
+        Title.Caption = 'ATIVO'
+        Visible = True
+      end>
+  end
+  inherited pnlOpcoes: TPanel
+    Top = 365
+    Width = 920
+    ExplicitTop = 347
+    ExplicitWidth = 908
+    DesignSize = (
+      916
+      45)
+    inherited btnInserir: TBitBtn
+      Left = 13
+      ExplicitLeft = 13
+    end
+    inherited btnAlterar: TBitBtn
+      Left = 110
+      ExplicitLeft = 110
+    end
+    inherited btnExcluir: TBitBtn
+      Left = 207
+      ExplicitLeft = 207
+    end
+    inherited btnFechar: TBitBtn
+      ExplicitLeft = 803
+    end
+  end
+end

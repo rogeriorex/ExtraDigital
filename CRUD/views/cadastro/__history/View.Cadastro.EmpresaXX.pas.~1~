@@ -1,0 +1,86 @@
+unit View.Cadastro.EmpresaXX;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.DBCtrls,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons,
+  FireDAC.Comp.Client, View.Cadastro.Consts;
+
+type
+  TfrmCadastroEmpresa = class(TForm)
+    grdCadastro: TDBGrid;
+    pnlOpcoes: TPanel;
+    grdCadastroEmpresaEndereco: TDBGrid;
+    btnInserir: TBitBtn;
+    btnAlterar: TBitBtn;
+    btnExcluir: TBitBtn;
+    btnFechar: TBitBtn;
+    procedure FormCreate(Sender: TObject);
+    procedure btnInserirClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure btnFecharClick(Sender: TObject);
+  private
+    DataSetLocal: TFDQuery;
+    FormDetail: TForm;
+    FormDetailClass: TFormClass;
+    procedure ExecuteDataSetAction(const Value: TDataSetAction);
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadastroEmpresa: TfrmCadastroEmpresa;
+
+implementation
+
+uses
+  Model.Cadastro, View.Cadastro.EmpresaDetalhe;
+
+{$R *.dfm}
+
+procedure TfrmCadastroEmpresa.FormCreate(Sender: TObject);
+begin
+  DataSetLocal := dmCadastro.qryCadastroEmpresa;
+  FormDetailClass := TfrmCadastroEmpresaDetalhe;
+  FormDetail := frmCadastroEmpresaDetalhe;
+end;
+
+procedure TfrmCadastroEmpresa.ExecuteDataSetAction(const Value: TDataSetAction);
+begin
+  if Value = daInsert then
+      DataSetLocal.Append
+  else if Value = daEdit then
+      DataSetLocal.Edit;
+  Application.CreateForm(FormDetailClass, FormDetail);
+//  Application.CreateForm(TfrmCadastroEmpresaDetalhe, frmCadastroEmpresaDetalhe);
+  FormDetail.ShowModal;
+  FormDetail.Free;
+end;
+
+procedure TfrmCadastroEmpresa.btnInserirClick(Sender: TObject);
+begin
+  ExecuteDataSetAction(daInsert);
+end;
+
+procedure TfrmCadastroEmpresa.btnAlterarClick(Sender: TObject);
+begin
+  ExecuteDataSetAction(daEdit);
+end;
+
+procedure TfrmCadastroEmpresa.btnExcluirClick(Sender: TObject);
+begin
+  if DataSetLocal.RecordCount = 0 then
+    Exit;
+  if MessageDlg(MENSAGEM_EXCLUSAO_REGISTRO, mtConfirmation, mbYesNo, 0) <> mrYes then
+    Exit;
+  DataSetLocal.Delete;
+end;
+
+procedure TfrmCadastroEmpresa.btnFecharClick(Sender: TObject);
+begin
+  Close;
+end;
+
+end.

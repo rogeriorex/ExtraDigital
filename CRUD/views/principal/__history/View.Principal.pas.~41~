@@ -1,0 +1,78 @@
+unit View.Principal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Menus,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Data.DB, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons;
+
+type
+  TfrmPrincipal = class(TForm)
+    mmnPrincipal: TMainMenu;
+    mniEmpresa: TMenuItem;
+    mniEndereco: TMenuItem;
+    mniFuncionario: TMenuItem;
+    procedure mniClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure mniEmpresaClick(Sender: TObject);
+    procedure mniFuncionarioClick(Sender: TObject);
+  end;
+
+var
+  frmPrincipal: TfrmPrincipal;
+
+const
+  CONST_CADASTRO_EMPRESA = 'CADEMPRESA';
+  CONST_CADASTRO_ENDERECOS = 'CADENDERECOS';
+  CONST_CADASTRO_FUNCIONARIO = 'CADFUNCIONARIOS';
+
+  CONST_FORM_CADASTRO_EMPRESA = 'TfrmCadastroEmpresa';
+  CONST_FORM_CADASTRO_ENDERECO = 'TfrmCadastroEndereco';
+  CONST_FORM_CADASTRO_FUNCIONARIO = 'TfrmCadastroFuncionario';
+
+
+implementation
+
+{$R *.dfm}
+
+uses
+  View.Principal.Helper, View.Cadastro.Empresa, View.Cadastro.Endereco, View.Consulta.Funcionario;
+
+procedure TfrmPrincipal.FormCreate(Sender: TObject);
+begin
+  mniEmpresa.Table := CONST_CADASTRO_EMPRESA;
+  mniEmpresa.Form := CONST_FORM_CADASTRO_EMPRESA;
+
+  mniEndereco.Table := CONST_CADASTRO_ENDERECOS;
+  mniEndereco.Form := CONST_FORM_CADASTRO_ENDERECO;
+
+  mniFuncionario.Table := CONST_CADASTRO_FUNCIONARIO;
+  mniFuncionario.Form := CONST_FORM_CADASTRO_FUNCIONARIO;
+end;
+
+procedure TfrmPrincipal.mniClick(Sender: TObject);
+begin
+  Application.CreateForm(TfrmCadastroEndereco, frmCadastroEndereco);
+  frmCadastroEndereco.Caption := (Sender as TmenuItem).InformarTitulo;
+  frmCadastroEndereco.hint := (Sender as TmenuItem).Table;
+  frmCadastroEndereco.ShowModal;
+  frmCadastroEndereco.Free;end;
+
+procedure TfrmPrincipal.mniEmpresaClick(Sender: TObject);
+begin
+  Application.CreateForm(TfrmCadastroEmpresa, frmCadastroEmpresa);
+  frmCadastroEmpresa.Caption := (Sender as TmenuItem).InformarTitulo;
+  frmCadastroEmpresa.hint := (Sender as TmenuItem).Table;
+  frmCadastroEmpresa.ShowModal;
+  frmCadastroEmpresa.Free;
+end;
+
+procedure TfrmPrincipal.mniFuncionarioClick(Sender: TObject);
+begin
+  Application.CreateForm(TfrmConsultaFuncionario, frmConsultaFuncionario);
+  frmConsultaFuncionario.hint := (Sender as TmenuItem).Table;
+  frmConsultaFuncionario.ShowModal;
+  frmConsultaFuncionario.Free;
+end;
+
+end.

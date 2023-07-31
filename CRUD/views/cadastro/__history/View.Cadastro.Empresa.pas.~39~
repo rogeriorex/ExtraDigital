@@ -1,0 +1,36 @@
+unit View.Cadastro.Empresa;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, View.Cadastro, Data.DB, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TfrmCadastroEmpresa = class(TfrmCadastro)
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadastroEmpresa: TfrmCadastroEmpresa;
+
+implementation
+
+uses
+  View.CadastroDetalhe, View.Cadastro.EmpresaDetalheXX, Model.Cadastro;
+
+{$R *.dfm}
+
+procedure TfrmCadastroEmpresa.FormCreate(Sender: TObject);
+begin
+  inherited;
+  DataSetLocal := dmCadastro.qryCadastroEmpresa;
+  FormDetailClass := TfrmCadastroEmpresaDetalheXX;
+  FormDetail := frmCadastroEmpresaDetalheXX;
+end;
+
+end.

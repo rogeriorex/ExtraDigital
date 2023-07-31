@@ -1,0 +1,85 @@
+object dmCadastroLookup: TdmCadastroLookup
+  Height = 440
+  Width = 428
+  PixelsPerInch = 120
+  object qryUFLookup: TFDQuery
+    Active = True
+    Connection = dmConexao.Connection
+    SQL.Strings = (
+      'SELECT'
+      '  IDUF, '
+      '  SGESTADO'
+      'FROM'
+      '  CADUF'
+      'ORDER BY'
+      '  SGESTADO')
+    Left = 100
+    Top = 292
+  end
+  object srcUFLookup: TDataSource
+    DataSet = qryUFLookup
+    Left = 267
+    Top = 292
+  end
+  object srcCidadeLookup: TDataSource
+    DataSet = qryCidadeLookup
+    Left = 267
+    Top = 206
+  end
+  object srcEmpresaLookup: TDataSource
+    DataSet = qryEmpresaLookup
+    Left = 267
+    Top = 120
+  end
+  object srcTitularLookup: TDataSource
+    DataSet = qryTitularLookup
+    Left = 267
+    Top = 34
+  end
+  object qryCidadeLookup: TFDQuery
+    Active = True
+    Connection = dmConexao.Connection
+    SQL.Strings = (
+      'SELECT'
+      '  IDCIDADE, '
+      '  NMCIDADE'
+      'FROM'
+      '  CADCIDADE'
+      'ORDER BY'
+      '  NMCIDADE')
+    Left = 100
+    Top = 206
+  end
+  object qryEmpresaLookup: TFDQuery
+    Active = True
+    Connection = dmConexao.Connection
+    SQL.Strings = (
+      'SELECT'
+      '  IDEMPRESA, '
+      '  NMEMPRESA'
+      'FROM'
+      '  CADEMPRESA'
+      'WHERE'
+      '  STATIVO <> '#39'S'#39
+      'ORDER BY'
+      '  NMEMPRESA')
+    Left = 100
+    Top = 120
+  end
+  object qryTitularLookup: TFDQuery
+    Active = True
+    Connection = dmConexao.Connection
+    SQL.Strings = (
+      'SELECT'
+      '  IDTITULAR, '
+      '  NMTITULAR'
+      'FROM'
+      '  CADTITULAR'
+      'WHERE'
+      '  STEXCLUIDO <> '#39'S'#39
+      'ORDER BY'
+      '  NMTITULAR')
+    Left = 100
+    Top = 34
+  end
+end

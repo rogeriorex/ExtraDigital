@@ -1,0 +1,85 @@
+unit View.Cadastro.EmpresaDetalheXX;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Data.DB, Vcl.Mask, Vcl.DBCtrls,
+  FireDAC.Comp.Client;
+
+type
+  TfrmCadastroEmpresaDetalhe = class(TForm)
+    pnlOpcoes: TPanel;
+    btnCancelar: TBitBtn;
+    pnlCadastro: TPanel;
+    lblIDEMPRESA: TLabel;
+    IDEMPRESA: TDBEdit;
+    lblNMEMPRESA: TLabel;
+    NMEMPRESA: TDBEdit;
+    lblNUCNPJ: TLabel;
+    NUCNPJ: TDBEdit;
+    lblNUINSCRICAO: TLabel;
+    NUINSCRICAO: TDBEdit;
+    lblDTCADASTRO: TLabel;
+    DTCADASTRO: TDBEdit;
+    lblDTABERTURA: TLabel;
+    DTABERTURA: TDBEdit;
+    lblTLCOMERCIAL: TLabel;
+    TLCOMERCIAL: TDBEdit;
+    lblTLCELULAR: TLabel;
+    TLCELULAR: TDBEdit;
+    lblTXEMAIL: TLabel;
+    TXEMAIL: TDBEdit;
+    STEXCLUIDO: TDBRadioGroup;
+    DTEXCLUIDO: TDBEdit;
+    STATIVO: TDBCheckBox;
+    btnSalvar: TBitBtn;
+    procedure FormCreate(Sender: TObject);
+    procedure StAtivoClick(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    DataSetLocal: TFDQuery;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadastroEmpresaDetalhe: TfrmCadastroEmpresaDetalhe;
+
+implementation
+
+uses
+   Model.Cadastro;
+
+{$R *.dfm}
+
+procedure TfrmCadastroEmpresaDetalhe.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if DataSetLocal.State in [dsEdit, dsInsert] then
+    DataSetLocal.Cancel;
+end;
+
+procedure TfrmCadastroEmpresaDetalhe.FormCreate(Sender: TObject);
+begin
+  DataSetLocal := dmCadastro.qryCadastroEmpresa;
+end;
+
+procedure TfrmCadastroEmpresaDetalhe.StAtivoClick(Sender: TObject);
+begin
+  pnlCadastro.Enabled := (Sender as TDBCheckBox).Checked;
+end;
+
+procedure TfrmCadastroEmpresaDetalhe.btnSalvarClick(Sender: TObject);
+begin
+  DataSetLocal.Post;
+  Close;
+end;
+
+procedure TfrmCadastroEmpresaDetalhe.btnCancelarClick(Sender: TObject);
+begin
+  Close;
+end;
+
+end.

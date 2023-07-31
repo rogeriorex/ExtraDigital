@@ -1,0 +1,49 @@
+unit View.Principal.Helper;
+
+interface
+
+uses
+  Vcl.Menus, Vcl.Forms;
+
+type
+  TMenuItemHelper = class helper for TMenuItem
+  private
+    function GetTable: string;
+    procedure SetTable(const Value: string);
+  public
+    property Table: string Read GetTable write SetTable;
+  end;
+
+implementation
+
+uses
+  System.Generics.Collections, System.Classes, SysUtils;
+
+const
+  ATALHO_TECLADO_MENU = '&';
+
+var
+  LTable: TDictionary<TComponent, string>;
+
+{ TMenuItemHelper }
+
+function TMenuItemHelper.GetTable: string;
+begin
+  if LTable.ContainsKey(self) then
+    Result := LTable.Items[self];
+end;
+
+procedure TMenuItemHelper.SetTable(const Value: string);
+begin
+  LTable.Add(self, Value);
+end;
+
+initialization
+
+  LTable := TDictionary<TComponent, string>.Create;
+
+finalization
+
+  LTable.free;
+
+end.

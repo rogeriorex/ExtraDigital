@@ -1,0 +1,361 @@
+object dmCadastro: TdmCadastro
+  OnCreate = DataModuleCreate
+  Height = 479
+  Width = 944
+  PixelsPerInch = 120
+  object srcCadastroEndereco: TDataSource
+    DataSet = qryCadastroEndereco
+    Left = 300
+    Top = 190
+  end
+  object qryCadastroEmpresa: TFDQuery
+    AfterScroll = qryCadastroEmpresaAfterScroll
+    Connection = dmConexao.Connection
+    UpdateObject = upCadastroEmpresa
+    SQL.Strings = (
+      'SELECT'
+      '  *  '
+      'FROM'
+      '  CADEMPRESA'
+      'ORDER BY'
+      '  NMEMPRESA')
+    Left = 104
+    Top = 18
+  end
+  object srcCadastroEmpresa: TDataSource
+    DataSet = qryCadastroEmpresa
+    Left = 104
+    Top = 190
+  end
+  object qryCadastroEmpresaEndereco: TFDQuery
+    Active = True
+    MasterSource = srcCadastroEmpresa
+    Connection = dmConexao.Connection
+    SQL.Strings = (
+      'SELECT '
+      '  D.IDENDERECO AS " ",'
+      '  T.NMTITULAR AS TITULAR,'
+      '  D.NMENDERECO AS LOGRADOURO,'
+      '  D.NUENDERECO AS "N'#186'",'
+      '  D.NMBAIRRO AS BAIRRO,'
+      '  C.NMCIDADE AS CIDADE,'
+      '  U.SGESTADO AS UF'
+      'FROM '
+      '  CADENDERECOS D'
+      '  INNER JOIN CADEMPRESA E ON (D.IDEMPRESA = E.IDEMPRESA)'
+      '  LEFT JOIN CADTITULAR T ON (D.IDTITULAR = T.IDTITULAR)'
+      '  LEFT JOIN CADCIDADE C ON (D.IDCIDADE = C.IDCIDADE)'
+      '  LEFT JOIN CADUF U ON (D.IDUF = U.IDUF)'
+      'WHERE'
+      '  E.IDEMPRESA = :IDEMPRESA'
+      '  AND'
+      '  D.STATIVO = '#39'S'#39)
+    Left = 103
+    Top = 276
+    ParamData = <
+      item
+        Name = 'IDEMPRESA'
+        DataType = ftInteger
+        FDDataType = dtInt16
+        ParamType = ptInput
+        Value = 0
+      end>
+  end
+  object srcCadastroEmpresaEndereco: TDataSource
+    DataSet = qryCadastroEmpresaEndereco
+    Left = 104
+    Top = 362
+  end
+  object upCadastroEmpresa: TFDUpdateSQL
+    Connection = dmConexao.Connection
+    InsertSQL.Strings = (
+      'INSERT INTO CADEMPRESA'
+      '(IDEMPRESA, NMEMPRESA, NUCNPJ, NUINSCRICAO, '
+      '  STATIVO, DTCADASTRO, DTABERTURA, TLCOMERCIAL, '
+      '  TLCELULAR, TXEMAIL, STEXCLUIDO)'
+      
+        'VALUES (:NEW_IDEMPRESA, :NEW_NMEMPRESA, :NEW_NUCNPJ, :NEW_NUINSC' +
+        'RICAO, '
+      '  '#39'S'#39', CURRENT_DATE, :NEW_DTABERTURA, :NEW_TLCOMERCIAL, '
+      '  :NEW_TLCELULAR, :NEW_TXEMAIL, '#39'N'#39')')
+    ModifySQL.Strings = (
+      'UPDATE CADEMPRESA'
+      'SET NMEMPRESA = :NEW_NMEMPRESA, NUCNPJ = :NEW_NUCNPJ, '
+      '  NUINSCRICAO = :NEW_NUINSCRICAO, STATIVO = :NEW_STATIVO, '
+      '  DTABERTURA = :NEW_DTABERTURA, '
+      '  TLCOMERCIAL = :NEW_TLCOMERCIAL, TLCELULAR = :NEW_TLCELULAR, '
+      '  TXEMAIL = :NEW_TXEMAIL'
+      'WHERE IDEMPRESA = :OLD_IDEMPRESA')
+    DeleteSQL.Strings = (
+      'UPDATE CADEMPRESA'
+      'SET STEXCLUIDO = '#39'S'#39', DTEXCLUIDO = CURRENT_DATE'
+      'WHERE IDEMPRESA = :OLD_IDEMPRESA'
+      '')
+    FetchRowSQL.Strings = (
+      
+        'SELECT IDEMPRESA, NMEMPRESA, NUCNPJ, NUINSCRICAO, STATIVO, DTCAD' +
+        'ASTRO, '
+      
+        '  DTABERTURA, TLCOMERCIAL, TLCELULAR, TXOBS, TXEMAIL, STEXCLUIDO' +
+        ', '
+      '  DTEXCLUIDO'
+      'FROM CADEMPRESA'
+      'WHERE IDEMPRESA = :OLD_IDEMPRESA'
+      'AND STEXCLUIDO = '#39'S'#39)
+    Left = 104
+    Top = 104
+  end
+  object qryCadastroEndereco: TFDQuery
+    Active = True
+    Connection = dmConexao.Connection
+    SQL.Strings = (
+      'SELECT'
+      '  D.*,'
+      '  T.NMTITULAR,'
+      '  E.NMEMPRESA,'
+      '  C.NMCIDADE,'
+      '  U.SGESTADO'
+      'FROM '
+      '  CADENDERECOS D'
+      '  LEFT JOIN CADEMPRESA E ON (D.IDEMPRESA = E.IDEMPRESA)'
+      '  LEFT JOIN CADTITULAR T ON (D.IDTITULAR = T.IDTITULAR)'
+      '  LEFT JOIN CADCIDADE C ON (D.IDCIDADE = C.IDCIDADE)'
+      '  LEFT JOIN CADUF U ON (D.IDUF = U.IDUF)')
+    Left = 299
+    Top = 18
+  end
+  object upCadastroEndereco: TFDUpdateSQL
+    Connection = dmConexao.Connection
+    InsertSQL.Strings = (
+      'INSERT INTO CADEMPRESA'
+      '(IDEMPRESA, NMEMPRESA, NUCNPJ, NUINSCRICAO, '
+      '  STATIVO, DTCADASTRO, DTABERTURA, TLCOMERCIAL, '
+      '  TLCELULAR, TXEMAIL, STEXCLUIDO)'
+      
+        'VALUES (:NEW_IDEMPRESA, :NEW_NMEMPRESA, :NEW_NUCNPJ, :NEW_NUINSC' +
+        'RICAO, '
+      '  '#39'S'#39', CURRENT_DATE, :NEW_DTABERTURA, :NEW_TLCOMERCIAL, '
+      '  :NEW_TLCELULAR, :NEW_TXEMAIL, '#39'N'#39')')
+    ModifySQL.Strings = (
+      'UPDATE CADEMPRESA'
+      'SET NMEMPRESA = :NEW_NMEMPRESA, NUCNPJ = :NEW_NUCNPJ, '
+      '  NUINSCRICAO = :NEW_NUINSCRICAO, STATIVO = :NEW_STATIVO, '
+      '  DTABERTURA = :NEW_DTABERTURA, '
+      '  TLCOMERCIAL = :NEW_TLCOMERCIAL, TLCELULAR = :NEW_TLCELULAR, '
+      '  TXEMAIL = :NEW_TXEMAIL'
+      'WHERE IDEMPRESA = :OLD_IDEMPRESA')
+    DeleteSQL.Strings = (
+      'UPDATE CADEMPRESA'
+      'SET STEXCLUIDO = '#39'S'#39', DTEXCLUIDO = CURRENT_DATE'
+      'WHERE IDEMPRESA = :OLD_IDEMPRESA'
+      '')
+    FetchRowSQL.Strings = (
+      
+        'SELECT IDEMPRESA, NMEMPRESA, NUCNPJ, NUINSCRICAO, STATIVO, DTCAD' +
+        'ASTRO, '
+      
+        '  DTABERTURA, TLCOMERCIAL, TLCELULAR, TXOBS, TXEMAIL, STEXCLUIDO' +
+        ', '
+      '  DTEXCLUIDO'
+      'FROM CADEMPRESA'
+      'WHERE IDEMPRESA = :OLD_IDEMPRESA'
+      'AND STEXCLUIDO = '#39'S'#39)
+    Left = 299
+    Top = 104
+  end
+  object qryUF: TFDQuery
+    Connection = dmConexao.Connection
+    SQL.Strings = (
+      'SELECT IDUF, SGESTADO'
+      'FROM   CADUF'
+      'ORDER BY SGESTADO')
+    Left = 786
+    Top = 192
+  end
+  object srcUF: TDataSource
+    DataSet = qryUF
+    Left = 786
+    Top = 279
+  end
+  object srcCidade: TDataSource
+    DataSet = qryCidade
+    Left = 786
+    Top = 105
+  end
+  object srcEmpresa: TDataSource
+    DataSet = qryEmpresa
+    Left = 665
+    Top = 276
+  end
+  object srcTitular: TDataSource
+    DataSet = qryTitular
+    Left = 665
+    Top = 104
+  end
+  object qryCidade: TFDQuery
+    Connection = dmConexao.Connection
+    SQL.Strings = (
+      'SELECT IDCIDADE, NMCIDADE'
+      'FROM   CADCIDADE'
+      'ORDER BY NMCIDADE')
+    Left = 786
+    Top = 18
+  end
+  object qryEmpresa: TFDQuery
+    Connection = dmConexao.Connection
+    SQL.Strings = (
+      'SELECT IDEMPRESA, NMEMPRESA'
+      'FROM   CADEMPRESA'
+      'ORDER BY NMEMPRESA')
+    Left = 665
+    Top = 190
+  end
+  object qryTitular: TFDQuery
+    Connection = dmConexao.Connection
+    SQL.Strings = (
+      'SELECT IDTITULAR, NMTITULAR'
+      'FROM   CADTITULAR'
+      'WHERE STEXCLUIDO <> '#39'S'#39
+      'ORDER BY NMTITULAR')
+    Left = 665
+    Top = 18
+  end
+  object qryAux: TFDQuery
+    MasterSource = srcCadastroEmpresa
+    Connection = dmConexao.Connection
+    SQL.Strings = (
+      'SELECT *'
+      'FROM   CADENDERECOS'
+      '')
+    Left = 665
+    Top = 362
+  end
+  object srcCadastroFuncionario: TDataSource
+    DataSet = qryCadastroFuncionario
+    Left = 506
+    Top = 190
+  end
+  object qryCadastroFuncionario: TFDQuery
+    Active = True
+    Connection = dmConexao.Connection
+    UpdateObject = upCadastroFuncionario
+    SQL.Strings = (
+      'SELECT '
+      '  F.IDFUNCIONARIO,'
+      '  F.IDEMPRESA,'
+      '  E.NMEMPRESA,'
+      '  F.NMFUNCIONARIO,'
+      '  F.NUCPF,'
+      '  F.NURG,'
+      '  F.DTNASCIMENTO,'
+      '  F.TXEMAIL,'
+      '  F.NUCARTEIRATRAB,'
+      '  F.NUTITULOELEITOR,'
+      '  F.NUCARTEIRAMOTORISTA,'
+      '  F.TPCATERORIA,'
+      '  F.DTVALIDADECARTEIRAMOT,'
+      '  F.TLRESIDENCIAL,'
+      '  F.TLCELULAR,'
+      '  F.TLCONTATO,'
+      '  F.NMCONTATO,'
+      '  F.DTCONTRATACAO,'
+      '  F.DTDEMISSAO,'
+      '  F.DTCADASTRO,'
+      '  F.STATIVO,'
+      '  F.TXOBS,'
+      '  F.NMENDERECO,'
+      '  F.NUENDERECO,'
+      '  F.NMBAIRRO,'
+      '  F.IDCIDADE,'
+      '  C.NMCIDADE,'
+      '  F.IDUF,'
+      '  U.SGESTADO, '
+      '  F.NUCEP,'
+      '  F.STEXCLUIDO,'
+      '  F.DTEXCLUIDO'
+      'FROM'
+      '  CADFUNCIONARIOS F'
+      '  LEFT JOIN CADEMPRESA E ON F.IDEMPRESA = E.IDEMPRESA '
+      '  LEFT JOIN CADCIDADE C ON F.IDCIDADE = C.IDCIDADE '
+      '  LEFT JOIN CADUF U ON F.IDUF = U.IDUF'
+      'WHERE'
+      '  F.STEXCLUIDO = '#39'N'#39
+      'ORDER BY '
+      '  F.NMFUNCIONARIO')
+    Left = 505
+    Top = 18
+  end
+  object upCadastroFuncionario: TFDUpdateSQL
+    Connection = dmConexao.Connection
+    InsertSQL.Strings = (
+      'INSERT INTO CADFUNCIONARIOS'
+      '(IDFUNCIONARIO, IDEMPRESA, NMFUNCIONARIO, NUCPF, '
+      '  NURG, DTNASCIMENTO, TXEMAIL, NUCARTEIRATRAB, '
+      '  NUTITULOELEITOR, NUCARTEIRAMOTORISTA, TPCATERORIA, '
+      '  DTVALIDADECARTEIRAMOT, TLRESIDENCIAL, TLCELULAR, '
+      '  TLCONTATO, NMCONTATO, DTCONTRATACAO, DTDEMISSAO, '
+      '  DTCADASTRO, STATIVO, NMENDERECO, '
+      '  NUENDERECO, NMBAIRRO, IDCIDADE, IDUF, '
+      '  NUCEP, STEXCLUIDO)'
+      
+        'VALUES (:NEW_IDFUNCIONARIO, :NEW_IDEMPRESA, :NEW_NMFUNCIONARIO, ' +
+        ':NEW_NUCPF, '
+      
+        '  :NEW_NURG, :NEW_DTNASCIMENTO, :NEW_TXEMAIL, :NEW_NUCARTEIRATRA' +
+        'B, '
+      
+        '  :NEW_NUTITULOELEITOR, :NEW_NUCARTEIRAMOTORISTA, :NEW_TPCATEROR' +
+        'IA, '
+      
+        '  :NEW_DTVALIDADECARTEIRAMOT, :NEW_TLRESIDENCIAL, :NEW_TLCELULAR' +
+        ', '
+      
+        '  :NEW_TLCONTATO, :NEW_NMCONTATO, :NEW_DTCONTRATACAO, :NEW_DTDEM' +
+        'ISSAO, '
+      '  CURRENT_DATE, '#39'S'#39', :NEW_NMENDERECO, '
+      '  :NEW_NUENDERECO, :NEW_NMBAIRRO, :NEW_IDCIDADE, :NEW_IDUF, '
+      '  :NEW_NUCEP, '#39'N'#39')')
+    ModifySQL.Strings = (
+      'UPDATE CADFUNCIONARIOS'
+      'SET IDEMPRESA = :NEW_IDEMPRESA, '
+      '  NMFUNCIONARIO = :NEW_NMFUNCIONARIO, NUCPF = :NEW_NUCPF, '
+      
+        '  NURG = :NEW_NURG, DTNASCIMENTO = :NEW_DTNASCIMENTO, TXEMAIL = ' +
+        ':NEW_TXEMAIL, '
+      
+        '  NUCARTEIRATRAB = :NEW_NUCARTEIRATRAB, NUTITULOELEITOR = :NEW_N' +
+        'UTITULOELEITOR, '
+      '  NUCARTEIRAMOTORISTA = :NEW_NUCARTEIRAMOTORISTA, '
+      
+        '  DTVALIDADECARTEIRAMOT = :NEW_DTVALIDADECARTEIRAMOT, TLRESIDENC' +
+        'IAL = :NEW_TLRESIDENCIAL, '
+      '  TLCELULAR = :NEW_TLCELULAR, TLCONTATO = :NEW_TLCONTATO, '
+      
+        '  NMCONTATO = :NEW_NMCONTATO, DTCONTRATACAO = :NEW_DTCONTRATACAO' +
+        ', '
+      '  DTDEMISSAO = :NEW_DTDEMISSAO, '
+      '  STATIVO = :NEW_STATIVO, NMENDERECO = :NEW_NMENDERECO, '
+      '  NUENDERECO = :NEW_NUENDERECO, NMBAIRRO = :NEW_NMBAIRRO, '
+      '  IDCIDADE = :NEW_IDCIDADE, IDUF = :NEW_IDUF, NUCEP = :NEW_NUCEP'
+      'WHERE IDFUNCIONARIO = :OLD_IDFUNCIONARIO')
+    DeleteSQL.Strings = (
+      'UPDATE CADFUNCIONARIOS'
+      'SET STEXCLUIDO = '#39'S'#39', DTEXCLUIDO = CURRENT_DATE'
+      'WHERE IDFUNCIONARIO = :OLD_IDFUNCIONARIO')
+    FetchRowSQL.Strings = (
+      
+        'SELECT IDFUNCIONARIO, IDEMPRESA, NMFUNCIONARIO, NUCPF, NURG, DTN' +
+        'ASCIMENTO, '
+      
+        '  TXEMAIL, NUCARTEIRATRAB, NUTITULOELEITOR, NUCARTEIRAMOTORISTA,' +
+        ' '
+      '  TPCATERORIA, DTVALIDADECARTEIRAMOT, TLRESIDENCIAL, TLCELULAR, '
+      '  TLCONTATO, NMCONTATO, DTCONTRATACAO, DTDEMISSAO, DTCADASTRO, '
+      '  STATIVO, TXOBS, NMENDERECO, NUENDERECO, NMBAIRRO, IDCIDADE, '
+      '  IDUF, NUCEP, STEXCLUIDO, DTEXCLUIDO'
+      'FROM CADFUNCIONARIOS'
+      'WHERE IDFUNCIONARIO = :OLD_IDFUNCIONARIO')
+    Left = 505
+    Top = 104
+  end
+end

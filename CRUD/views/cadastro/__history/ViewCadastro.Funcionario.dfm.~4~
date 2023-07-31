@@ -1,0 +1,32 @@
+inherited frmCadastroFuncionario: TfrmCadastroFuncionario
+  Caption = 'Funcionario'
+  ClientHeight = 396
+  ClientWidth = 910
+  ExplicitLeft = 3
+  ExplicitTop = 3
+  TextHeight = 15
+  inherited grdCadastro: TDBGrid
+    Width = 894
+    Height = 326
+  end
+  inherited pnlOpcoes: TPanel
+    Top = 347
+    Width = 910
+    inherited btnInserir: TBitBtn
+      Left = 13
+      ExplicitLeft = 13
+    end
+    inherited btnAlterar: TBitBtn
+      Left = 110
+      ExplicitLeft = 110
+    end
+    inherited btnExcluir: TBitBtn
+      Left = 207
+      ExplicitLeft = 207
+    end
+    inherited btnFechar: TBitBtn
+      Left = 817
+      ExplicitLeft = 821
+    end
+  end
+end

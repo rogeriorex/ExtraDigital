@@ -1,0 +1,29 @@
+inherited frmCadastro1: TfrmCadastro1
+  Caption = 'frmCadastro1'
+  ExplicitWidth = 926
+  ExplicitHeight = 443
+  TextHeight = 15
+  inherited grdCadastro: TDBGrid
+    Width = 898
+  end
+  inherited pnlOpcoes: TPanel
+    ExplicitTop = 338
+    ExplicitWidth = 904
+    inherited btnInserir: TBitBtn
+      Left = 13
+      ExplicitLeft = 13
+    end
+    inherited btnAlterar: TBitBtn
+      Left = 110
+      ExplicitLeft = 110
+    end
+    inherited btnExcluir: TBitBtn
+      Left = 207
+      ExplicitLeft = 207
+    end
+    inherited btnFechar: TBitBtn
+      Left = 821
+      ExplicitLeft = 821
+    end
+  end
+end

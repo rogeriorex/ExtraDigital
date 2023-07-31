@@ -1,0 +1,34 @@
+unit View.Cadastro.FuncionarioDetalhe;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, View.CadastroDetalhe, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Model.Cadastro;
+
+type
+  TfrmCadastroFuncionarioDetalhe = class(TfrmCadastroDetalhe)
+    procedure btnSalvarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadastroFuncionarioDetalhe: TfrmCadastroFuncionarioDetalhe;
+
+implementation
+
+uses
+  ViewCadastro.Funcionario;
+
+{$R *.dfm}
+
+procedure TfrmCadastroFuncionarioDetalhe.btnSalvarClick(Sender: TObject);
+begin
+  frmCadastroFuncionario.grdCadastro.DataSource.DataSet.Post;
+  inherited;
+end;
+
+end.

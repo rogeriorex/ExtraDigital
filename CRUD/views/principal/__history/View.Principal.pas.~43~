@@ -1,0 +1,55 @@
+unit View.Principal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Menus,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Data.DB, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons;
+
+type
+  TfrmPrincipal = class(TForm)
+    mmnPrincipal: TMainMenu;
+    mniEmpresa: TMenuItem;
+    mniEndereco: TMenuItem;
+    mniFuncionario: TMenuItem;
+    xxx1: TMenuItem;
+    procedure mniClick(Sender: TObject);
+    procedure mniEmpresaClick(Sender: TObject);
+    procedure mniFuncionarioClick(Sender: TObject);
+  end;
+
+var
+  frmPrincipal: TfrmPrincipal;
+
+implementation
+
+{$R *.dfm}
+
+uses
+  View.Principal.Helper, View.Cadastro.Empresa, View.Cadastro.Endereco, View.Consulta.Funcionario;
+
+procedure InstanciarForm(AFormClass: TFormClass);
+var
+  LForm: TForm;
+begin
+  LForm := AFormClass.Create(Application);
+  LForm.ShowModal;
+  LForm.Free;
+end;
+
+procedure TfrmPrincipal.mniClick(Sender: TObject);
+begin
+  InstanciarForm(TfrmCadastroEndereco);
+end;
+
+procedure TfrmPrincipal.mniEmpresaClick(Sender: TObject);
+begin
+  InstanciarForm(TfrmCadastroEmpresa);
+end;
+
+procedure TfrmPrincipal.mniFuncionarioClick(Sender: TObject);
+begin
+  InstanciarForm(TfrmConsultaFuncionario);
+end;
+
+end.

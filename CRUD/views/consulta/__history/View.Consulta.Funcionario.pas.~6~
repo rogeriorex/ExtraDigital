@@ -1,0 +1,25 @@
+unit View.Consulta.Funcionario;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, View.Cadastro, Data.DB, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.DBCtrls;
+
+type
+  TfrmConsultaFuncionario = class(TfrmCadastro)
+    lbxConsulta: TDBLookupComboBox;
+    lblConsultar: TLabel;
+  end;
+
+var
+  frmConsultaFuncionario: TfrmConsultaFuncionario;
+
+implementation
+
+uses
+  Model.Consulta;
+
+{$R *.dfm}
+
+end.

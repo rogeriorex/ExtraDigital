@@ -1,0 +1,10 @@
+unit View.Principal.Consts;
+
+interface
+
+const
+  CONST_PREFIXO_CAPTION_CADASTRO = 'Cadastro de ';
+
+implementation
+
+end.

@@ -1,0 +1,10 @@
+unit View.Cadastro.Consts;
+
+interface
+
+const
+  MENSAGEM_EXCLUSAO_REGISTRO = 'Deseja excluir o registro selecionado?';
+
+implementation
+
+end.

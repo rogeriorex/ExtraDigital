@@ -1,0 +1,70 @@
+unit View.Principal.Helper;
+
+interface
+
+uses
+  Vcl.Menus, Vcl.Forms, SysUtils, Vcl.Buttons, System.Generics.Collections, System.Classes;
+
+type
+  TMenuItemHelper = class helper for TMenuItem
+    procedure CarregarTabela(const Value: String);
+    function InformarTabela: String;
+    function InformarTitulo: String;
+  end;
+
+
+  TBitBtnHelper = Class Helper for TBitBtn
+  protected
+    function GetFormAssociado: string;
+    procedure SetFormAssociado(const Value: string);
+  public
+    property FormAssociado: string Read GetFormAssociado write SetFormAssociado;
+  end;
+
+implementation
+
+const
+  ATALHO_TECLADO_MENU = '&';
+
+var
+  LFormAssociado: TDictionary<TComponent, string>;
+
+{ TMenuItemHelper }
+
+procedure TMenuItemHelper.CarregarTabela(const Value: String);
+begin
+  Hint := Value;
+end;
+
+function TMenuItemHelper.InformarTabela: String;
+begin
+  Result := Hint;
+end;
+
+function TMenuItemHelper.InformarTitulo: String;
+begin
+  Result := StringReplace(Caption, ATALHO_TECLADO_MENU, EmptyStr, [rfReplaceAll]);
+end;
+
+{ TBitBtnHelper }
+
+function TBitBtnHelper.GetFormAssociado: string;
+begin
+  if LFormAssociado.ContainsKey(self) then
+    Result := LFormAssociado.Items[self];
+end;
+
+procedure TBitBtnHelper.SetFormAssociado(const Value: string);
+begin
+  LFormAssociado.Add(self, Value);
+end;
+
+initialization
+
+  LFormAssociado := TDictionary<TComponent, string>.Create;
+
+finalization
+
+  LFormAssociado.free;
+
+end.
