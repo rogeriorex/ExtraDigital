@@ -1,7 +1,0 @@
-inherited frmCadastro1: TfrmCadastro1
-  Caption = 'frmCadastro1'
-  TextHeight = 15
-  inherited grdCadastro: TDBGrid
-    Width = 898
-  end
-end
